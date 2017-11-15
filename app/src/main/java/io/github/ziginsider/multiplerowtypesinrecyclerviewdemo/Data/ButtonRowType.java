@@ -1,9 +1,11 @@
 package io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Data;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Factory.ViewHolderFactory;
 import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Interfaces.RowType;
 
 /**
@@ -25,5 +27,16 @@ public class ButtonRowType implements RowType {
                 Toast.makeText(context, "Click!", Toast.LENGTH_SHORT).show();
             }
         };
+    }
+
+    @Override
+    public int getItemViewType() {
+        return RowType.BUTTON_ROW_TYPE;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder) {
+        ViewHolderFactory.ButtonViewHolder buttonViewHolder = (ViewHolderFactory.ButtonViewHolder) viewHolder;
+        buttonViewHolder.button.setOnClickListener(getOnClickListener());
     }
 }
