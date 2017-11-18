@@ -49,5 +49,9 @@ public class MainActivity extends AppCompatActivity {
         adapter = new MultipleTypesAdapter(items);
         recyclerView.setAdapter(adapter);
 
+
+//        RecyclerView.RecycledViewPool pool = recyclerView.getRecycledViewPool();
+//        pool.setMaxRecycledViews();
+
     }
 }
