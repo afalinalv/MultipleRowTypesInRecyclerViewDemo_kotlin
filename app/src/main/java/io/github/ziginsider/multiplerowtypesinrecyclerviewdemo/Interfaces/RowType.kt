@@ -1,17 +1,17 @@
-package io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Interfaces;
+package io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Interfaces
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
 /**
  * Created by zigin on 13.11.2017.
  */
+interface RowType {
+    val itemViewType: Int
+    fun onBindViewHolder(viewHolder: ViewHolder?)
 
-public interface RowType {
-    int BUTTON_ROW_TYPE =   0;
-    int IMAGE_ROW_TYPE = 1;
-    int TEXT_ROW_TYPE = 2;
-
-    int getItemViewType();
-
-    void onBindViewHolder(RecyclerView.ViewHolder viewHolder);
+    companion object {
+        const val BUTTON_ROW_TYPE = 0
+        const val IMAGE_ROW_TYPE = 1
+        const val TEXT_ROW_TYPE = 2
+    }
 }

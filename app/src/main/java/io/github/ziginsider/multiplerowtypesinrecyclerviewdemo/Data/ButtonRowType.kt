@@ -1,42 +1,26 @@
-package io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Data;
+package io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Data
 
-import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Toast;
+import android.content.Context
+import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Interfaces.RowType
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import android.widget.Toast
+import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Factory.ViewHolderFactory.ButtonViewHolder
 
-import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Factory.ViewHolderFactory;
-import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Interfaces.RowType;
+import android.view.View
 
 /**
  * Created by zigin on 14.11.2017.
  */
+class ButtonRowType(private val context: Context) : RowType {
+    val onClickListener: View.OnClickListener
+        get() = View.OnClickListener {
+            Toast.makeText(context, "Click!", Toast.LENGTH_SHORT).show()
+        }
+    override val itemViewType: Int
+        get() = RowType.Companion.BUTTON_ROW_TYPE
 
-public class ButtonRowType implements RowType {
-
-    private Context context;
-
-    public ButtonRowType(Context context) {
-        this.context = context;
-    }
-
-    public View.OnClickListener getOnClickListener() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "Click!", Toast.LENGTH_SHORT).show();
-            }
-        };
-    }
-
-    @Override
-    public int getItemViewType() {
-        return RowType.BUTTON_ROW_TYPE;
-    }
-
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder) {
-        ViewHolderFactory.ButtonViewHolder buttonViewHolder = (ViewHolderFactory.ButtonViewHolder) viewHolder;
-        buttonViewHolder.button.setOnClickListener(getOnClickListener());
+    override fun onBindViewHolder(viewHolder: ViewHolder?) {
+        val buttonViewHolder = viewHolder as ButtonViewHolder?
+        buttonViewHolder!!.button.setOnClickListener(onClickListener)
     }
 }

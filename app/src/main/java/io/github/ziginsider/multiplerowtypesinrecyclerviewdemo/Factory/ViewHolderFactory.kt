@@ -1,74 +1,70 @@
-package io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Factory;
+package io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Factory
 
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Interfaces.RowType
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
-import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Interfaces.RowType;
-import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.R;
+import android.view.ViewGroup
+import android.view.LayoutInflater
+import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.R
+import android.widget.TextView
+
+import android.view.View
+import android.widget.Button
+import android.widget.ImageView
 
 /**
  * Created by zigin on 15.11.2017.
  */
-
-public class ViewHolderFactory {
-
-    public static class ButtonViewHolder extends RecyclerView.ViewHolder {
-
-        public Button button;
-
-        public ButtonViewHolder(View itemView) {
-            super(itemView);
-            button = (Button) itemView.findViewById(R.id.button);
+object ViewHolderFactory {
+    fun create(parent: ViewGroup, viewType: Int): ViewHolder? {
+        return when (viewType) {
+            RowType.Companion.BUTTON_ROW_TYPE -> {
+                val buttonTypeView =
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.row_type_button, parent, false)
+                ButtonViewHolder(buttonTypeView)
+            }
+            RowType.Companion.TEXT_ROW_TYPE -> {
+                val textTypeView =
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.row_type_text, parent, false)
+                TextViewHolder(textTypeView)
+            }
+            RowType.Companion.IMAGE_ROW_TYPE -> {
+                val imageTypeView =
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.row_type_image, parent, false)
+                ImageViewHolder(imageTypeView)
+            }
+            else -> null
         }
     }
 
-    public static class TextViewHolder extends RecyclerView.ViewHolder {
+    class ButtonViewHolder(itemView: View) : ViewHolder(itemView) {
+        var button: Button
 
-        public TextView headerTextView;
-        public TextView textView1;
-
-        public TextViewHolder(View itemView) {
-            super(itemView);
-            headerTextView = (TextView) itemView.findViewById(R.id.header);
-            textView1 = (TextView) itemView.findViewById(R.id.text);
-        }
-
-    }
-
-    public static class ImageViewHolder extends RecyclerView.ViewHolder {
-
-        public ImageView imageView;
-        public TextView textView2;
-
-        public ImageViewHolder(View itemView) {
-            super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.image);
-            textView2 = (TextView) itemView.findViewById(R.id.text_image);
+        init {
+            button = itemView.findViewById<View>(R.id.button) as Button
         }
     }
 
-    public static RecyclerView.ViewHolder create(ViewGroup parent, int viewType) {
+    class TextViewHolder(itemView: View) : ViewHolder(itemView) {
+        var headerTextView: TextView
+        var textView1: TextView
 
-        switch (viewType) {
-            case RowType.BUTTON_ROW_TYPE:
-                View buttonTypeView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_type_button, parent, false);
-                return new ViewHolderFactory.ButtonViewHolder(buttonTypeView);
+        init {
+            headerTextView = itemView.findViewById<View>(R.id.header) as TextView
+            textView1 = itemView.findViewById<View>(R.id.text) as TextView
+        }
+    }
 
-            case RowType.TEXT_ROW_TYPE:
-                View textTypeView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_type_text, parent, false);
-                return new ViewHolderFactory.TextViewHolder(textTypeView);
+    class ImageViewHolder(itemView: View) : ViewHolder(itemView) {
+        var imageView: ImageView
+        var textView2: TextView
 
-            case RowType.IMAGE_ROW_TYPE:
-                View imageTypeView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_type_image, parent, false);
-                return new ViewHolderFactory.ImageViewHolder(imageTypeView);
-
-            default:
-                return null;
+        init {
+            imageView = itemView.findViewById<View>(R.id.image) as ImageView
+            textView2 = itemView.findViewById<View>(R.id.text_image) as TextView
         }
     }
 }

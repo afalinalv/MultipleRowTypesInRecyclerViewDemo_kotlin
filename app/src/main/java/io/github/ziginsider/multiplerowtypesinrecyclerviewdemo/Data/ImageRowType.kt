@@ -1,30 +1,18 @@
-package io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Data;
+package io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Data
 
-import android.support.v7.widget.RecyclerView;
-
-import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Factory.ViewHolderFactory;
-import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Interfaces.RowType;
+import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Interfaces.RowType
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Factory.ViewHolderFactory.ImageViewHolder
 
 /**
  * Created by zigin on 14.11.2017.
  */
+class ImageRowType(private val text: String) : RowType {
+    override val itemViewType: Int
+        get() = RowType.Companion.IMAGE_ROW_TYPE
 
-public class ImageRowType implements RowType {
-
-    private String text;
-
-    public ImageRowType(String text) {
-        this.text = text;
-    }
-
-    @Override
-    public int getItemViewType() {
-        return RowType.IMAGE_ROW_TYPE;
-    }
-
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder) {
-        ViewHolderFactory.ImageViewHolder imageViewHolder = (ViewHolderFactory.ImageViewHolder) viewHolder;
-        imageViewHolder.textView2.setText(text);
+    override fun onBindViewHolder(viewHolder: ViewHolder?) {
+        val imageViewHolder = viewHolder as ImageViewHolder?
+        imageViewHolder!!.textView2.text = text
     }
 }

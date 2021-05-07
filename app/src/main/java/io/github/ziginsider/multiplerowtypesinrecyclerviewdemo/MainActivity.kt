@@ -1,57 +1,48 @@
-package io.github.ziginsider.multiplerowtypesinrecyclerviewdemo;
+package io.github.ziginsider.multiplerowtypesinrecyclerviewdemo
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Interfaces.RowType
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Adapter.MultipleTypesAdapter
+import android.os.Bundle
+import android.view.View
+import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Data.ButtonRowType
+import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Data.ImageRowType
+import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Data.TextRowType
+import androidx.recyclerview.widget.LinearLayoutManager
+import java.util.*
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Adapter.MultipleTypesAdapter;
-import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Data.ButtonRowType;
-import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Data.ImageRowType;
-import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Data.TextRowType;
-import io.github.ziginsider.multiplerowtypesinrecyclerviewdemo.Interfaces.RowType;
-
-public class MainActivity extends AppCompatActivity {
-
-    RecyclerView recyclerView;
-    MultipleTypesAdapter adapter;
-    List<RowType> items = new ArrayList<>();
-    Random rnd = new Random(1337);
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+// https://github.com/ziginsider/MultipleRowTypesInRecyclerViewDemo.git
+class MainActivity : AppCompatActivity() {
+    var recyclerView: RecyclerView? = null
+    var adapter: MultipleTypesAdapter? = null
+    var items: MutableList<RowType> = ArrayList()
+    var rnd = Random(1337)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        recyclerView = findViewById<View>(R.id.recycler_view) as RecyclerView
 
 
         //generate data
-        for (int i = 0; i < 15; i++) {
-            switch (rnd.nextInt(3)) {
-                case 0 :
-                    items.add(new ButtonRowType(this));
-                    break;
-                case 1 :
-                    items.add(new ImageRowType("pic # " + String.valueOf(i)));
-                    break;
-                case 2 :
-                    items.add(new TextRowType("Header " + String.valueOf(i),
-                            "This is text " + String.valueOf(i)));
+        for (i in 0..14) {
+            when (rnd.nextInt(3)) {
+                0 -> items.add(ButtonRowType(this))
+                1 -> items.add(ImageRowType("pic # $i"))
+                2 -> items.add(
+                    TextRowType(
+                        "Header $i",
+                        "This is text $i"
+                    )
+                )
             }
         }
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MultipleTypesAdapter(items);
-        recyclerView.setAdapter(adapter);
+        recyclerView!!.layoutManager = LinearLayoutManager(this)
+        adapter = MultipleTypesAdapter(items)
+        recyclerView!!.adapter = adapter
 
 
 //        RecyclerView.RecycledViewPool pool = recyclerView.getRecycledViewPool();
 //        pool.setMaxRecycledViews();
-
     }
 }
