@@ -18,19 +18,19 @@ import android.widget.ImageView
 object ViewHolderFactory {
     fun create(parent: ViewGroup, viewType: Int): ViewHolder? {
         return when (viewType) {
-            RowType.Companion.BUTTON_ROW_TYPE -> {
+            RowType.BUTTON_ROW_TYPE -> {
                 val buttonTypeView =
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.row_type_button, parent, false)
                 ButtonViewHolder(buttonTypeView)
             }
-            RowType.Companion.TEXT_ROW_TYPE -> {
+            RowType.TEXT_ROW_TYPE -> {
                 val textTypeView =
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.row_type_text, parent, false)
                 TextViewHolder(textTypeView)
             }
-            RowType.Companion.IMAGE_ROW_TYPE -> {
+            RowType.IMAGE_ROW_TYPE -> {
                 val imageTypeView =
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.row_type_image, parent, false)
